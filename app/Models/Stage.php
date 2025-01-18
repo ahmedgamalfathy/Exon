@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Stage extends Model
 {
-    protected $guraded =[];
+    protected $guarded =[];
     protected $table ="stages";
     public function user()
     {

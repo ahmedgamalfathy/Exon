@@ -1,15 +1,17 @@
 <?php
-use App\Http\Controllers\API\AnswerController;
-use App\Http\Controllers\API\ContactController;
-use App\Http\Controllers\API\PolicyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\TestController;
 use App\Http\Controllers\API\GradeController;
 use App\Http\Controllers\API\StageController;
+use App\Http\Controllers\API\AnswerController;
+use App\Http\Controllers\API\PolicyController;
+use App\Http\Controllers\API\ContactController;
+use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\QustionController;
 use App\Http\Controllers\API\MaterialController;
 use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\PayPalPaymentController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -24,7 +26,7 @@ Route::prefix('mobile')->group(function(){
        Route::post('/login','login');
        Route::post('/homepage','homepage')->middleware('auth:sanctum');
        Route::post('/logout','logout')->middleware('auth:sanctum');
-       Route::post('/resetPassword/{phone}','resetPassword')->middleware('auth:sanctum');
+       Route::post('/resetPassword/{phone}','resetPassword');
     });
     Route::controller(GradeController::class)->group(function(){
         Route::get('grades','index');
@@ -67,6 +69,15 @@ Route::prefix('mobile')->group(function(){
         Route::post('policys','store');
         Route::delete('delete_policy/{id}','delete');
     });
+    Route::controller(PaymentController::class)->group(function(){
+        Route::post('PayTest/{test}','store')->middleware('auth:sanctum');
+        Route::get('teachercosts','teachercosts');
+    });
+    // Route::post('getPlans', [PayPalPaymentController::class, "getPlans"]);
+    // Route::get('getTest', [PayPalPaymentController::class, "getTest"]);
+    // Route::post('handle-payment', [PayPalPaymentController::class, "handlePayment"])->name('make.payment');
+    // Route::post('unsubscribePaypal', [PayPalPaymentController::class, "unsubscribePaypal"])->name('cancel.payment');
+
 });
 
 

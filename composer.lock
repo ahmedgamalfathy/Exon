@@ -4,8 +4,52 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a2f9577f3297ca2e6d86cc3e0ce30f7",
+    "content-hash": "70f5245d0ed91cff08216da8fd3cb227",
     "packages": [
+        {
+            "name": "anlutro/curl",
+            "version": "1.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/anlutro/php-curl.git",
+                "reference": "1c569768a106dd40f5160ebebb703f09c6b58c8b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/anlutro/php-curl/zipball/1c569768a106dd40f5160ebebb703f09c6b58c8b",
+                "reference": "1c569768a106dd40f5160ebebb703f09c6b58c8b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "anlutro\\cURL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Lutro",
+                    "email": "anlutro@gmail.com"
+                }
+            ],
+            "description": "Simple OOP cURL wrapper.",
+            "support": {
+                "issues": "https://github.com/anlutro/php-curl/issues",
+                "source": "https://github.com/anlutro/php-curl/tree/1.5.2"
+            },
+            "time": "2023-06-27T07:39:41+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.12.1",
@@ -2071,6 +2115,57 @@
             "time": "2024-12-08T08:18:47+00:00"
         },
         {
+            "name": "leifermendez/laravel-paypal-subscription",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leifermendez/laravel-paypal-subscription.git",
+                "reference": "d1f7168d1a5de16bebf49401be9ea3e14310f76d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leifermendez/laravel-paypal-subscription/zipball/d1f7168d1a5de16bebf49401be9ea3e14310f76d",
+                "reference": "d1f7168d1a5de16bebf49401be9ea3e14310f76d",
+                "shasum": ""
+            },
+            "require": {
+                "anlutro/curl": "^1.4",
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "PapyalSubscription": "\\leifermendez\\paypal\\PapyalSubscriptionFacade"
+                    },
+                    "providers": [
+                        "\\leifermendez\\paypal\\ProviderPaypalSubscription"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "leifermendez\\paypal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Leifer Mendez",
+                    "email": "leifer33@gmail.com"
+                }
+            ],
+            "description": "Plugin especial para laravel el cual permite de forma facil el cobro de subscripcion con PAYPAL",
+            "support": {
+                "issues": "https://github.com/leifermendez/laravel-paypal-subscription/issues",
+                "source": "https://github.com/leifermendez/laravel-paypal-subscription/tree/v1.0.4"
+            },
+            "time": "2021-02-18T16:27:20+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "3.8.1",
             "source": {
@@ -3362,6 +3457,72 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
+        },
+        {
+            "name": "srmklive/paypal",
+            "version": "3.0.32",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/srmklive/laravel-paypal.git",
+                "reference": "031d69d7c99f9ef0874a34cb85326ede28cd7aed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/srmklive/laravel-paypal/zipball/031d69d7c99f9ef0874a34cb85326ede28cd7aed",
+                "reference": "031d69d7c99f9ef0874a34cb85326ede28cd7aed",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "guzzlehttp/guzzle": "~7.0",
+                "illuminate/support": "~6.0|~7.0|~8.0|~9.0|^10.0|^11.0",
+                "nesbot/carbon": "~2.0|^3.0",
+                "php": ">=7.2|^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^8.0|^9.0|^10.0|^11.0",
+                "symfony/var-dumper": "~5.0|^6.0|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "PayPal": "Srmklive\\PayPal\\Facades\\PayPal"
+                    },
+                    "providers": [
+                        "Srmklive\\PayPal\\Providers\\PayPalServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Srmklive\\PayPal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raza Mehdi",
+                    "email": "srmk@outlook.com"
+                }
+            ],
+            "description": "Laravel plugin For Processing Payments Through Paypal Express Checkout. Can Be Used Independently With Other Applications.",
+            "keywords": [
+                "http",
+                "laravel paypal",
+                "paypal",
+                "rest",
+                "web service"
+            ],
+            "support": {
+                "issues": "https://github.com/srmklive/laravel-paypal/issues",
+                "source": "https://github.com/srmklive/laravel-paypal/tree/3.0.32"
+            },
+            "time": "2024-06-24T14:34:51+00:00"
         },
         {
             "name": "symfony/clock",

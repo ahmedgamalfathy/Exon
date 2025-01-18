@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Grade;
 use App\Models\Stage;
+use App\Models\Payment;
 use App\Models\Material;
 use App\Models\Question;
 use Illuminate\Database\Eloquent\Model;
@@ -31,8 +32,10 @@ class Test extends Model
     }
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'teacher_id');
     }
-
+    public function payments() {
+         return $this->hasMany(Payment::class)->where('status', 'completed');
+    }
 
 }

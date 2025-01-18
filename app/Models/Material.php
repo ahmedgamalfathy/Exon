@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Material extends Model
 {
-    protected $guraded =[];
+    protected $guarded =[];
 
     public function grade()
     {
@@ -14,6 +14,6 @@ class Material extends Model
     }
     public function tests()
     {
-        return $this->hasMany(test::class);
+        return $this->hasMany(Test::class);
     }
 }

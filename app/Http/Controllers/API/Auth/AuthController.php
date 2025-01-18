@@ -181,52 +181,99 @@ class AuthController extends Controller
 
    public function login()
    {
-       $data= Request()->validate([
-           "phone"=>"required|numeric",
-           "password"=>"required|min:8"
-       ]);
-    $user= User::where('phone',$data['phone'])->first();
-    if(!$user){
+    $data = Request()->validate([
+    "phone" => "required|numeric",
+    "password" => "required|min:8"
+    ]);
+
+    $user = User::where('phone', $data['phone'])->first();
+
+    if (!$user) {
         return response()->json([
-            "status"=>422,
-            'msg' => 'يوجد خطا  في الموبيل او الباسورد'], 422);
-        }
-    if($user && $user->applier === "مُعلم" && $user->is_approve === true ){
-        if(!Auth::attempt(["phone"=>$data['phone'],"password"=>$data['password']])){
+            "status" => 422,
+            'msg' => 'يوجد خطأ في الموبيل أو الباسورد'
+        ], 422);
+    }
+
+// تحقق إذا كان المستخدم مُعلم أو طالب
+    if ($user->applier === "مُعلم") {
+    // إذا كان مُعلم، تأكد من الموافقة (is_approve)
+    if ($user->is_approve === 1) {
+        if (!Auth::attempt(["phone" => $data['phone'], "password" => $data['password']])) {
             return response()->json([
-                "status"=>401,
-                'msg' => 'Unauthorized'], 401);
-            }
-        }else{
-        return response()->json([
-            "status"=>403,
-            'msg' => 'طلبك قيد المراجعة 😊'], 403);
+                "status" => 401,
+                'msg' => 'Unauthorized'
+            ], 401);
         }
 
-        $user =Auth::user();
-        if(!$user){
-            return response()->json([
-                 "status"=>404,
-                "msg"=>"UserNotFound"],404);
-         }
-        $user =User::findOrFail($user->id);
-        $token =$user->createToken($user->phone,['*'],now()->addMonth())->plainTextToken;
-        $data=
-            [
-                    "id"=>$user->id,
-                    "name"=>$user->name,
-                    "email"=>$user->email,
-                    "phone"=>$user->phone,
-                    "stage"=>$user->stage_id,
-                    "mater"=>$user->mater,
-                    "grade"=>$user->grade,
-                    "photo"=>is_null($user->photo) ? null : asset('/images/'. $user->photo),
-                    "token"=>$token,
-            ];
+        // تسجيل الدخول ناجح، تكوين الاستجابة
+        $user = Auth::user();
+        $token = $user->createToken($user->phone, ['*'], now()->addMonth())->plainTextToken;
+
+        $data = [
+            "id" => $user->id,
+            "name" => $user->name,
+            "email" => $user->email,
+            "phone" => $user->phone,
+            "stage" => $user->stage_id,
+            "mater" => $user->mater,
+            "grade" => $user->grade,
+            "photo" => is_null($user->photo) ? null : asset('/images/' . $user->photo),
+            "token" => $token,
+        ];
+
         return response()->json([
-            "status"=>200,
-            "data"=>$data,
-        ],200);
+            "status" => 200,
+            "data" => $data,
+        ], 200);
+    } else {
+        return response()->json([
+            "status" => 403,
+            'msg' => 'طلبك قيد المراجعة 😊'
+        ], 403);
+    }
+    } elseif ($user->applier === "طالب") {
+    // إذا كان طالب، تأكد من وجود الدفع (شروطه الخاصة)
+    if ($user->is_approve === 0) {
+        if (!Auth::attempt(["phone" => $data['phone'], "password" => $data['password']])) {
+            return response()->json([
+                "status" => 401,
+                'msg' => 'Unauthorized'
+            ], 401);
+        }
+
+        // تسجيل الدخول ناجح، تكوين الاستجابة
+        $user = Auth::user();
+        $token = $user->createToken($user->phone, ['*'], now()->addMonth())->plainTextToken;
+
+        $data = [
+            "id" => $user->id,
+            "name" => $user->name,
+            "email" => $user->email,
+            "phone" => $user->phone,
+            "stage" => $user->stage_id,
+            "mater" => $user->mater,
+            "grade" => $user->grade,
+            "photo" => is_null($user->photo) ? null : asset('/images/' . $user->photo),
+            "token" => $token,
+        ];
+
+        return response()->json([
+            "status" => 200,
+            "data" => $data,
+        ], 200);
+    } else {
+        return response()->json([
+            "status" => 403,
+            'msg' => 'يجب دفع الرسوم للتسجيل كطالب.'
+        ], 403);
+    }
+} else {
+    return response()->json([
+        "status" => 403,
+        'msg' => 'نوع المستخدم غير معروف.'
+    ], 403);
+}
    }
     public function logout(Request $request)
     {

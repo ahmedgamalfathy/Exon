@@ -53,6 +53,10 @@ class User extends Authenticatable
     }
     public function tests()
     {
-       return $this->hasMany(Test::class);
+       return $this->hasMany(Test::class,'teacher_id');
+    }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class)->where('status', 'completed');
     }
 }
